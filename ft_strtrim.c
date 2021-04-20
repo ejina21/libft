@@ -35,13 +35,13 @@ char	*ft_strtrim(char const *s1, char const *set)
 	l = count(s1, set);
 	if (l <= 0)
 	{
-		p = malloc(1);
+		p = (char *)malloc(1);
 		if (!p)
 			return (0);
 		p[0] = 0;
 		return (p);
 	}
-	p = malloc(l + 1);
+	p = (char *)malloc(l + 1);
 	if (!p)
 		return (p);
 	i = 0;

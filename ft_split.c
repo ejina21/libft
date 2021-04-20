@@ -29,39 +29,19 @@ static int	count_word(char const *s, char c)
 	return (count);
 }
 
-static int	help(char const *s, char c)
+static int	len_word(char const *s, char c)
 {
-	if (*s != c)
-		return (1);
-	else
-		return (0);
-}
+	int	i;
 
-static int	len_word(char const *s, char c, int i)
-{
-	int	flag;
-	int	count;
-	int	len;
-
-	flag = 0;
-	count = help(s, c);
-	len = 0;
-	while (*s++)
+	i = 0;
+	while (*s == c && *s)
+		s++;
+	while (*s != c && *s)
 	{
-		while (*s == c && *s++)
-			flag = 1;
-		if (flag && *s)
-		{
-			flag = 0;
-			count++;
-		}
-		if (count == i + 1)
-			return (len);
-		if (!(*s))
-			break ;
-		len++;
+		i++;
+		s++;
 	}
-	return (0);
+	return (i);
 }
 
 static int	freem(char **p, int i)
@@ -70,37 +50,38 @@ static int	freem(char **p, int i)
 
 	j = 0;
 	while (j < i)
-		free(p[j++]);
-	if (i > 0)
-		free(p);
+	{
+		free(p[j]);
+		j++;
+	}
+	free(p);
 	return (1);
 }
 
 char	**ft_split(char const *s, char c)
 {
 	char	**p;
-	int		count;
-	int		i[2];
+	int		i;
+	int		l;
 
 	if (!s)
 		return (0);
-	count = count_word(s, c);
-	p = malloc(sizeof(char *) * (count + 1));
+	p = (char **)malloc(sizeof(char *) * (count_word(s, c) + 1));
 	if (!p)
 		return (p);
-	i[0] = 0;
-	while (i[0] < count)
+	i = 0;
+	s = ft_strtrim(s, &c);
+	while (*s)
 	{
-		p[i[0]] = malloc(len_word(s, c, i[0]) + 1);
-		if (!p[i[0]] && freem(p, i[0]))
-			return (p);
 		while (*s == c && *s)
 			s++;
-		i[1] = 0;
-		while (*s != c && *s)
-			p[i[0]][i[1]++] = *s++;
-		p[i[0]++][i[1]] = 0;
+		l = len_word(s, c);
+		p[i] = ft_substr(s, 0, l);
+		if (!p[i] && freem(p, i))
+			return (p);
+		s += l;
+		i++;
 	}
-	p[i[0]] = 0;
+	p[i] = 0;
 	return (p);
 }

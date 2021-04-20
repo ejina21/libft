@@ -9,11 +9,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (0);
 	if (ft_strlen(s) <= start)
 	{
-		p = malloc(1);
+		p = (char *)malloc(1);
 		p[0] = 0;
 		return (p);
 	}
-	p = malloc(len + 1);
+	p = (char *)malloc(len + 1);
 	if (!p)
 		return (p);
 	i = 0;

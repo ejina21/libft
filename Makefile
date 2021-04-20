@@ -9,12 +9,15 @@ SRC 	= ft_atoi.c			ft_isdigit.c	ft_memcpy.c 		\
 		  ft_isalpha.c		ft_memchr.c		ft_putendl_fd.c		\
 		  ft_strjoin.c		ft_strnstr.c	ft_isascii.c		\
 		  ft_memcmp.c		ft_putnbr_fd.c	ft_strlcat.c		\
-		  ft_strrchr.c		ft_lstnew.c		ft_lstadd_front.c	\
-		  ft_lstsize.c		ft_lstlast.c	ft_lstadd_back.c	\
-		  ft_lstdelone.c	ft_lstclear.c	ft_lstiter.c		\
-		  ft_lstmap.c
+		  ft_strrchr.c		
+
+SRC1	= ft_lstnew.c		ft_lstadd_front.c	 ft_lstsize.c	\
+	  	  ft_lstlast.c		ft_lstadd_back.c	 ft_lstdelone.c	\
+		  ft_lstclear.c		ft_lstiter.c		 ft_lstmap.c	
 
 OBJ		= ${SRC:.c=.o}
+
+OBJ1	= ${SRC1:.c=.o}
 
 CC		= gcc
 
@@ -26,19 +29,22 @@ HEADER	= libft.h
 
 all:		${NAME}
 
-${NAME}:	${OBJ}
+${NAME}:	${OBJ} ${HEADER}
 		ar rcs ${NAME} ${OBJ}
 
-.c.o:		
+bonus:		${NAME}
+		ar rcs ${NAME} ${NAME} ${OBJ1}
+
+.c.o:	
 		${CC} ${CFLAGS} -c $< -I ${HEADER} -o ${<:.c=.o}
 
 clean:
-		rm -rf ${OBJ}
+		rm -rf ${OBJ} ${OBJ1}
 
 fclean:		clean
 		rm -rf ${NAME}
 
 re:			fclean all
 
-.PHONY:	all clean fclean re
+.PHONY:	all clean fclean bonus re
 
