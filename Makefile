@@ -29,13 +29,13 @@ HEADER	= libft.h
 
 all:		${NAME}
 
-${NAME}:	${OBJ} ${HEADER}
+${NAME}:	${OBJ}
 		ar rcs ${NAME} ${OBJ}
 
 bonus:		${NAME}
 		ar rcs ${NAME} ${NAME} ${OBJ1}
 
-.c.o:	
+%.o:	%.c ${HEADER}	
 		${CC} ${CFLAGS} -c $< -I ${HEADER} -o ${<:.c=.o}
 
 clean:
