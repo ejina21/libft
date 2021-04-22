@@ -58,6 +58,13 @@ static int	freem(char **p, int i)
 	return (1);
 }
 
+static const char	*skip(char const *s, char c)
+{
+	while (*s == c && *s)
+		s++;
+	return (s);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**p;
@@ -70,17 +77,16 @@ char	**ft_split(char const *s, char c)
 	if (!p)
 		return (p);
 	i = 0;
-	s = ft_strtrim(s, &c);
+	s = skip(s, c);
 	while (*s)
 	{
-		while (*s == c && *s)
-			s++;
 		l = len_word(s, c);
 		p[i] = ft_substr(s, 0, l);
 		if (!p[i] && freem(p, i))
 			return (p);
 		s += l;
 		i++;
+		s = skip(s, c);
 	}
 	p[i] = 0;
 	return (p);

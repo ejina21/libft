@@ -32,7 +32,7 @@ all:		${NAME}
 ${NAME}:	${OBJ}
 		ar rcs ${NAME} ${OBJ}
 
-bonus:		${NAME}
+bonus:		${NAME} ${OBJ1}
 		ar rcs ${NAME} ${NAME} ${OBJ1}
 
 %.o:	%.c ${HEADER}	
